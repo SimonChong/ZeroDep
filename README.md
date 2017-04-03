@@ -1,5 +1,7 @@
 # ZeroDep
 
+[![Build Status](https://travis-ci.org/SimonChong/ZeroDep.svg?branch=master)](https://travis-ci.org/SimonChong/ZeroDep)
+
 A simple Zero Dependency, dependency management framework
 
 ## Problem - What problem does this solve?
