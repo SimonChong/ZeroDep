@@ -30,18 +30,16 @@
 		done[name] = args;
 	};
 
-
-	var react = function(name, code, mkAsync) {
-		var toRun = mkAsync ? makeAsync(code) : code;
+	var react = function(name, code) {
 		if (typeof name === 'string') {
 			name = name.toLowerCase();
 			if (done[name]) {
-				run(name, toRun, [done[name]]);
+				run(name, code, done[name]);
 			} else {
 				if (!runQ[name]) {
 					runQ[name] = [];
 				}
-				runQ[name].push(toRun);
+				runQ[name].push(code);
 			}
 		} else if (name instanceof Array) {
 			//Cater for a dependancy array
@@ -53,7 +51,7 @@
 						count--;
 						argsArray[z] = arguments[0];
 						if (count === 0) {
-							run(name, toRun, argsArray);
+							run(name, code, argsArray);
 						}
 					};
 				};
@@ -65,13 +63,12 @@
 
 	//Exposed API
 	window.ZD = {
-		define: function(name, code, makeAsync) {
-			var args = code();
-			args = args instanceof Array ? args : [args];
-			trigger(name, args);
+		define: function(name, code) {
+			var arg = code();
+			trigger(name, [arg]);
 		},
-		require: function(deps, code, makeAsync) {
-			react(deps, code, makeAsync);
+		require: function(deps, code) {
+			react(deps, code);
 		}
 	};
 
@@ -84,6 +81,6 @@
 			react("ZDL", code);
 		}
 	};
-	trigger("ZDL", ZD);
+	trigger("ZDL", [ZD]);
 
 })();
