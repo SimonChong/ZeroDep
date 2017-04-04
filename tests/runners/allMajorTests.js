@@ -21,7 +21,7 @@
 
 		//Define it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.define("test1", function() {
+			zd.def("test1", function() {
 				assert.ok("RUN SOME CODE", "Running code in a define block works");
 				done();
 				return "output1";
@@ -35,11 +35,11 @@
 
 		//Define and Require it
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.define("test2", function() {
+			zd.def("test2", function() {
 				assert.ok("RUN SOME CODE", "Defining a function as 'test2' works");
 				return "output2";
 			});
-			zd.require("test2", function(fromDefine) {
+			zd.req("test2", function(fromDefine) {
 				assert.ok("RUN SOME CODE", "Requiring 'test2' before running a function");
 				assert.deepEqual(fromDefine, "output2", "Argument reflects what was returned");
 				done();
@@ -53,11 +53,11 @@
 
 		//Define and Require it
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.define("test2a", function() {
+			zd.def("test2a", function() {
 				assert.ok("RUN SOME CODE", "Defining a function as 'test2' works");
 				return ["output0", "output1", "output2", "output3", "output4", "output4"];
 			});
-			zd.require("test2a", function(args) {
+			zd.req("test2a", function(args) {
 				assert.ok("RUN SOME CODE", "Requiring 'test2' before running a function");
 				assert.deepEqual(args[0], "output0", "Argument0 reflects what was returned in the defined");
 				assert.deepEqual(args[1], "output1", "Argument1 reflects what was returned in the defined");
@@ -75,7 +75,7 @@
 
 		//Require it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.require("test3", function(fromDefine) {
+			zd.req("test3", function(fromDefine) {
 				assert.ok("RUN SOME CODE", "Requiring 'test3' before it was defined. But it should run after");
 				assert.deepEqual(fromDefine, "SomethingNeeded", "Argument was what we required from test3");
 
@@ -85,7 +85,7 @@
 
 		//Define it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.define("test3", function() {
+			zd.def("test3", function() {
 				assert.ok("RUN SOME CODE", "Defining 'test3'");
 				return "SomethingNeeded";
 			});
@@ -98,7 +98,7 @@
 
 		//Define it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.define("test4A", function() {
+			zd.def("test4A", function() {
 				assert.ok("RUN SOME CODE", "Defining 'test3'");
 				return "SomethingNeededA";
 			});
@@ -106,7 +106,7 @@
 
 		//Define it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.define("test4B", function() {
+			zd.def("test4B", function() {
 				assert.ok("RUN SOME CODE", "Defining 'test3'");
 				return ["SomethingNeededB", "SomthingElse"];
 			});
@@ -114,7 +114,7 @@
 
 		//Require it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.require(["test4A", "test4B"], function(fromDefine1, fromDefine2) {
+			zd.req(["test4A", "test4B"], function(fromDefine1, fromDefine2) {
 				assert.ok("RUN SOME CODE", "Running after 2 defines");
 				assert.deepEqual(fromDefine1, "SomethingNeededA", "Argument 0 was what we required from the first define");
 				assert.deepEqual(fromDefine2[0], "SomethingNeededB", "Argument 0 was what we required from the second define");
@@ -131,17 +131,17 @@
 
 		//Define it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.define("test5A", function() {
-				assert.ok("RUN SOME CODE", "Defining 'test5A'");
+			zd.def("test6A", function() {
+				assert.ok("RUN SOME CODE", "Defining 'test6A'");
 				return "SomethingNeededA";
 			});
 		});
 
 		//Define it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.require("test5A", function(fromDefine1) {
-				zd.define("test5B", function() {
-					assert.ok("RUN SOME CODE", "Defining 'test5B'");
+			zd.req("test6A", function(fromDefine1) {
+				zd.def("test6B", function() {
+					assert.ok("RUN SOME CODE", "Defining 'test6B'");
 					return [fromDefine1, "SomethingNeededB"];
 				});
 			});
@@ -149,7 +149,39 @@
 
 		//Require it!
 		(window.ZDQ = window.ZDQ || []).push(function(zd) {
-			zd.require(["test5B"], function(fromDefine) {
+			zd.req(["test6B"], function(fromDefine) {
+				assert.ok("RUN SOME CODE", "Running after 2 defines");
+				assert.deepEqual(fromDefine[0], "SomethingNeededA", "Argument 0 was what we required from the second define");
+				assert.deepEqual(fromDefine[1], "SomethingNeededB", "Argument 1 was what we required from the second define");
+
+				done();
+			});
+		});
+	});
+
+	QUnit.test('should be able to "reqDef"  something', function(assert) {
+		assert.expect(5);
+		var done = assert.async();
+
+		//Define it!
+		(window.ZDQ = window.ZDQ || []).push(function(zd) {
+			zd.def("test6A", function() {
+				assert.ok("RUN SOME CODE", "Defining 'test6A'");
+				return "SomethingNeededA";
+			});
+		});
+
+		//Define it!
+		(window.ZDQ = window.ZDQ || []).push(function(zd) {
+			zd.reqDef("test6A", "test6B", function(fromDefine1) {
+				assert.ok("RUN SOME CODE", "Defining 'test6B'");
+				return [fromDefine1, "SomethingNeededB"];
+			});
+		});
+
+		//Require it!
+		(window.ZDQ = window.ZDQ || []).push(function(zd) {
+			zd.req(["test6B"], function(fromDefine) {
 				assert.ok("RUN SOME CODE", "Running after 2 defines");
 				assert.deepEqual(fromDefine[0], "SomethingNeededA", "Argument 0 was what we required from the second define");
 				assert.deepEqual(fromDefine[1], "SomethingNeededB", "Argument 1 was what we required from the second define");

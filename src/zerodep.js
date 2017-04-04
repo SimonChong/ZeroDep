@@ -63,12 +63,18 @@
 
 	//Exposed API
 	window.ZD = {
-		define: function(name, code) {
+		def: function(name, code) {
 			var arg = code();
 			trigger(name, [arg]);
 		},
-		require: function(deps, code) {
+		req: function(deps, code) {
 			react(deps, code);
+		},
+		reqDef: function(deps, name, code) {
+			react(deps, function() {
+				var arg = code.apply(window, Array.prototype.slice.call(arguments));
+				trigger(name, [arg]);
+			});
 		}
 	};
 
