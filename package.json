@@ -1,29 +1,29 @@
 {
-  "name": "zerodep",
-  "version": "1.1.0",
-  "description": "A simple Zero Dependency, dependency management framework",
-  "main": "index.js",
-  "scripts": {
-    "test": "npm run lint && npm run testonly",
-    "testonly": "grunt qunit",
-    "build": "grunt build",
-    "lint": "grunt lint"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SimonChong/ZeroDep.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SimonChong/ZeroDep/issues"
-  },
-  "homepage": "https://github.com/SimonChong/ZeroDep#readme",
-  "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-connect": "^1.0.2",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-qunit": "^1.3.0",
-    "grunt-contrib-uglify": "^2.2.0"
-  }
+    "name": "zerodep",
+    "version": "1.2.0",
+    "description": "A simple Zero Dependency, dependency management framework",
+    "main": "index.js",
+    "scripts": {
+        "test": "npm run lint && npm run testonly",
+        "testonly": "grunt qunit",
+        "build": "grunt build",
+        "lint": "grunt lint"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SimonChong/ZeroDep.git"
+    },
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/SimonChong/ZeroDep/issues"
+    },
+    "homepage": "https://github.com/SimonChong/ZeroDep#readme",
+    "devDependencies": {
+        "grunt": "^1.0.1",
+        "grunt-contrib-connect": "^1.0.2",
+        "grunt-contrib-jshint": "^1.1.0",
+        "grunt-contrib-qunit": "^1.3.0",
+        "grunt-contrib-uglify": "^2.2.0"
+    }
 }
