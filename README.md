@@ -20,7 +20,7 @@ Download and place the ZeroDep JavaScript library somewhere accessible via the w
 
 ### Step 1. Include the ZeroDep JavaScript somewhere in your pages.
 
-All dependancies and code requiring dependancies will be run after ZeroDep has run (code can of course be placed and loaded before). So if you want code to run in the HEAD html tag ZeroDep needs to load and run in the HEAD html tag.
+All dependencies and code requiring dependencies will be run after ZeroDep has run (code can of course be placed and loaded before). So if you want code to run in the HEAD html tag ZeroDep needs to load and run in the HEAD html tag.
 
 Via HTML Script tag
 
@@ -42,7 +42,7 @@ OR
 ### Step 2. Start using Zero Dep
 
 
-#### Defining dependancies
+#### Defining dependencies
 
 ```javascript
 (window.ZDQ = window.ZDQ || []).push(function(zd) {
@@ -60,7 +60,7 @@ zd.def("NameOfDependency", function() {
 });
 ```
 
-#### Requiring dependancies
+#### Requiring dependencies
 
 ```javascript
 (window.ZDQ = window.ZDQ || []).push(function(zd) {
@@ -70,7 +70,7 @@ zd.def("NameOfDependency", function() {
 });
 ```
 
-Requiring multiple dependancies
+Requiring multiple dependencies
 
 ```javascript
 (window.ZDQ = window.ZDQ || []).push(function(zd) {
@@ -87,7 +87,7 @@ zd.req("Dependency", function(fromDefine) {
   //Do your stuff
 });
 ```
-Requiring multiple dependancies
+Requiring multiple dependencies
 
 ```javascript
 zd.req(["Dependency1","Dependency2"], function(fromDep1, fromDep2) {
@@ -95,7 +95,7 @@ zd.req(["Dependency1","Dependency2"], function(fromDep1, fromDep2) {
 });
 ```
 
-#### Requiring and Defining dependancies together
+#### Requiring and Defining dependencies together
 
 ```javascript
 (window.ZDQ = window.ZDQ || []).push(function(zd) {
@@ -106,10 +106,31 @@ zd.req(["Dependency1","Dependency2"], function(fromDep1, fromDep2) {
 });
 ```
 
+Requiring multiple dependencies
+
+```javascript
+(window.ZDQ = window.ZDQ || []).push(function(zd) {
+  zd.reqDef(["RequiredDep1", "RequiredDep2"], "NewDepName", function(FromRequiredDep1, FromRequiredDep2) {
+    //Do your stuff
+    return "NewDepArgumentToExpose";
+  });
+});
+
+```
+
 OR (if you know the ZeroDep lib has loaded)
 
 ```javascript
 zd.reqDef("RequiredDep", "NewDepName", function(FromRequiredDep) {
+  //Do your stuff
+  return "NewDepArgumentToExpose";
+});
+```
+
+Requiring multiple dependencies
+
+```javascript
+zd.reqDef(["RequiredDep1", "RequiredDep2"], "NewDepName", function(FromRequiredDep1, FromRequiredDep2) {
   //Do your stuff
   return "NewDepArgumentToExpose";
 });
