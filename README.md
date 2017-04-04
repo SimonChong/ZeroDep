@@ -8,8 +8,8 @@ A simple Zero Dependency, dependency management framework
 
 Many JavaScript web dependency frameworks require you to have the framework loaded before doing ANYTHING. This framework and "method" does not require code to be run in ANY particular order. That means you could have this library loaded last and still have everything run in the right order.
 
-+ This is particular useful if you simply concatenate and minify JS files together without regard for ordering.
-+ Also useful if you have no control of where and when JS code runs.
++ This is particularly useful if you simply concatenate and minify JS files together without regard for ordering.
++ Also useful if you have *no control* of where and when JS code runs.
   - Many large organizations have lots of different groups that edit and maintain different parts of a page. This approach helps unify JS into a common framework slowly over time.
 
 ## Getting Started
@@ -52,7 +52,7 @@ OR
 });
 ```
 
-OR (if you know the zero dep lib has loaded)
+OR (if you know the ZeroDep lib has loaded)
 
 ```javascript
 zd.def("NameOfDependency", function() {
@@ -65,7 +65,7 @@ zd.def("NameOfDependency", function() {
 ```javascript
 (window.ZDQ = window.ZDQ || []).push(function(zd) {
   zd.req("Dependency", function(fromDefine) {
-    //Do you stuff
+    //Do your stuff
   });
 });
 ```
@@ -75,24 +75,42 @@ Requiring multiple dependancies
 ```javascript
 (window.ZDQ = window.ZDQ || []).push(function(zd) {
   zd.req(["Dependency1","Dependency2"], function(fromDep1, fromDep2) {
-    //Do you stuff
+    //Do your stuff
   });
 });
 ```
 
-OR (if you know the zero dep lib has loaded)
+OR (if you know the ZeroDep lib has loaded)
 
 ```javascript
 zd.req("Dependency", function(fromDefine) {
-  //Do you stuff
+  //Do your stuff
 });
 ```
 Requiring multiple dependancies
 
 ```javascript
 zd.req(["Dependency1","Dependency2"], function(fromDep1, fromDep2) {
-  //Do you stuff
+  //Do your stuff
 });
 ```
 
 #### Requiring and Defining dependancies together
+
+```javascript
+(window.ZDQ = window.ZDQ || []).push(function(zd) {
+  zd.reqDef("RequiredDep", "NewDepName", function(FromRequiredDep) {
+    //Do your stuff
+    return "NewDepArgumentToExpose";
+  });
+});
+```
+
+OR (if you know the ZeroDep lib has loaded)
+
+```javascript
+zd.reqDef("RequiredDep", "NewDepName", function(FromRequiredDep) {
+  //Do your stuff
+  return "NewDepArgumentToExpose";
+});
+```
